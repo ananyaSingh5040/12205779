@@ -17,6 +17,14 @@ app.get("/:shortId", async (req, res) => {
     {
       shortCode: shortID,
     },
+    {
+      $push: {
+        // for logging the time
+        visitHistory: {
+          timestamps: new Date(),
+        },
+      },
+    }
   );
   if (!entry) {
     return res.status(404).send("Short URL not found");

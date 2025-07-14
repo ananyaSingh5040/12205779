@@ -14,5 +14,13 @@ async function handleShortURL(req, res) {
   return res.status(201).json({"msg":"URL Created","shortLink": "http://localhost:8001/" +shortID, "expiry" : validity });
  
 }
+async function handleAnalytics(req, res) {
+  const shortID = req.params.shortId;
+  const result = await URL.findOne({ shortCode: shortID });
+  return res.json({
+    totalClicks: result.visitHistory.length,
+    analytics: result.visitHistory,
+  });
+}
 
-module.exports={handleShortURL};
+module.exports={handleShortURL,handleAnalytics};
